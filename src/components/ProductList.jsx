@@ -7,26 +7,28 @@ export const sampleProducts = [
   { id: 2, name: 'Milk', price: '$2.50', category: 'Dairy', inStock: false }
 ]
 
-const ProductList = ({ category, addToCart }) => {
+const ProductList = ({ selectedCategory, addToCart, darkMode }) => {
   const filteredProducts =
-    category === 'all'
+    selectedCategory === 'All'
       ? sampleProducts
-      : sampleProducts.filter((p) => p.category === category)
+      : sampleProducts.filter((p) => p.category === selectedCategory)
 
   return (
-    <div>
+    <div className="product-list">
       <h2>Available Products</h2>
-      
       {filteredProducts.length === 0 ? (
-        <p>No products available</p>
+        <p className="empty-state">No products available</p>
       ) : (
-        filteredProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            addToCart={addToCart}
-          />
-        ))
+        <div className="product-grid">
+          {filteredProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              addToCart={addToCart}
+              darkMode={darkMode}
+            />
+          ))}
+        </div>
       )}
     </div>
   )
